@@ -1,0 +1,15 @@
+curl 'https://fieldsw15756.cs.domino.tech/app-gateway/api' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'Cookie: dominoSession=b8df1f14-318d-4908-a9ce-c51a921ef1d7; intercom-session-ca1ff9b9b3e6ec502dd74ef8356046ed57cefec8=NUJuVlE3bU1udUJjRFFwZGhhOFdaRXZ0aGhRYUNPRjhCckVxL3Rncm5MbXhRb29hV0RkZU9JOFJORG00VTRwWi0tNy9mQUxiZHJhZXEyZXNGMzIyeW8wQT09--e051ea987905a79d8abdaa1e660c86d4622bde46; session=eyJvaWRjX2NzcmZfdG9rZW4iOiJiekE3VUZ2c2xYOGZoN1poV0hKMGljVzdTV0hRa2VheSJ9.YoJLxw.jN2w3EQ8ekJjsfWLUg5Krvu9tA4; kc_session_state=0b94ac68-f02c-4297-b37e-5a51d1aa4c33; PLAY_SESSION=eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImNzcmZUb2tlbiI6IjVlZjFlMTE2MzI3YzA2YmJhYTE2MzY2N2Y3NDljNjgxMzVhN2JhNGQtMTY1MjE4MjA4NTg3Ni03NTAyYmU2ZjZhOTc1YjdmZTUzMzliNTkiLCJwYWM0alNlc3Npb25JZCI6ImU3ZGI5MDdjLTg2NTgtNDEyOC1hOWIzLTdhYTgwYTQxYTczOSJ9LCJuYmYiOjE2NTI3MDc4NzMsImlhdCI6MTY1MjcwNzg3M30.VGLbl2uOjR-4YyKtJr_KhckTTRjltWHpbTlXjMGnqaY' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-Site: none' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="101", "Google Chrome";v="101"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  --compressed

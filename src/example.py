@@ -44,7 +44,7 @@ app.config.update({
     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
     #'OVERWRITE_REDIRECT_URI': 'https://fieldsw15756.cs.domino.tech/domino-play/oidc_callback'
     #'OVERWRITE_REDIRECT_URI': 'http://127.0.0.1:5000/'
-    'OVERWRITE_REDIRECT_URI': 'https://fieldsw15756.cs.domino.tech/finra/oidc_callback'
+    'OVERWRITE_REDIRECT_URI': 'https://fieldsw15756.cs.domino.tech/app-gateway/oidc_callback'
 })
 oidc = OpenIDConnect(app)
 

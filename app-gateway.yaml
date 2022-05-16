@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: app-gateway
-          image: quay.io/domino/domino-app-gateway:alphav29
+          image: quay.io/domino/domino-app-gateway:alphav31
           ports:
             - containerPort: 5000
       imagePullSecrets:
