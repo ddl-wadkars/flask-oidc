@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-gateway
+  labels:
+    app: app-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-gateway
+  template:
+    metadata:
+      labels:
+        app: app-gateway
+    spec:
+      containers:
+        - name: app-gateway
+          image: quay.io/domino/domino-app-gateway:alpha
+          ports:
+            - containerPort: 5000
+      imagePullSecrets:
+        - name: domino-quay-repos

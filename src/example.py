@@ -32,19 +32,26 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.config.update({
-    'SECRET_KEY': 'SomethingNotEntirelySecret',
+    'SECRET_KEY': '3XWisb3yvzsj32lNrjs39PKywil2z88o',
     'TESTING': True,
     'DEBUG': True,
-    'OIDC_CLIENT_SECRETS': 'client_secrets.json',
+    'OIDC_CLIENT_SECRETS': '/app/client_secrets.json',
     'OIDC_ID_TOKEN_COOKIE_SECURE': False,
     'OIDC_REQUIRE_VERIFIED_EMAIL': False,
-    'OIDC_OPENID_REALM': 'http://localhost:5000/oidc_callback'
+    'OIDC_USER_INFO_ENABLED': True,
+    'OIDC_OPENID_REALM': 'DominoRealm',
+    'OIDC_SCOPES': ['openid', 'email', 'profile'],
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+    #'OVERWRITE_REDIRECT_URI': 'https://fieldsw15756.cs.domino.tech/domino-play/oidc_callback'
+    #'OVERWRITE_REDIRECT_URI': 'http://127.0.0.1:5000/'
+    'OVERWRITE_REDIRECT_URI': 'https://fieldsw15756.cs.domino.tech/finra/oidc_callback'
 })
 oidc = OpenIDConnect(app)
 
 
 @app.route('/')
 def hello_world():
+    logging.info('Is user logged in ' + str(oidc.user_loggedin))
     if oidc.user_loggedin:
         return ('Hello, %s, <a href="/private">See private</a> '
                 '<a href="/logout">Log out</a>') % \
@@ -56,15 +63,31 @@ def hello_world():
 @app.route('/private')
 @oidc.require_login
 def hello_me():
-    info = oidc.user_getinfo(['email', 'openid_id'])
+    info = oidc.user_getinfo(['preferred_username', 'email', 'sub'])
     return ('Hello, %s (%s)! <a href="/">Return</a>' %
-            (info.get('email'), info.get('openid_id')))
+            (info.get('email'), info.get('preferred_username')))
 
 
 @app.route('/api')
-@oidc.accept_token(True, ['openid'])
+#@oidc.accept_token(True, ['openid'])
+#@oidc.require_login
 def hello_api():
+    logging.warning('Here')
+    #logging.warning(oidc.client_secrets)
+
+    #logging.warning(oidc.get_access_token())
+    logging.warning(oidc.user_getinfo([]))
+    info = oidc.user_getinfo(['preferred_username', 'email', 'sub'])
+    logging.warning(info)
     return json.dumps({'hello': 'Welcome %s' % g.oidc_token_info['sub']})
+
+@app.route('/api2')
+#@oidc.accept_token(True, ['openid'])
+#@oidc.require_login
+def hello_api2():
+    logging.warning('Here')
+
+    return json.dumps({'hello': 'Welcome '})
 
 
 @app.route('/logout')
@@ -74,4 +97,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5000, host="0.0.0.0")

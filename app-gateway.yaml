@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-gateway
+  labels:
+    app.kubernetes.io/name: app-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app-gateway
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: app-gateway
+    spec:
+      containers:
+        - name: app-gateway
+          image: quay.io/domino/domino-app-gateway:alphav29
+          ports:
+            - containerPort: 5000
+      imagePullSecrets:
+        - name: domino-quay-repos
+---
+# Source: mlflow/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-gateway
+  labels:
+    app.kubernetes.io/name: app-gateway
+    app.kubernetes.io/instance: app-gateway
+    app.kubernetes.io/version: "1.22.0"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: app-gateway
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-gateway
+  labels:
+    app.kubernetes.io/name: app-gateway
+    app.kubernetes.io/instance: app-gateway
+    app.kubernetes.io/version: "1.22.0"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
+      rewrite "(?i)/app-gateway/(.*)" /$1 break;
+      rewrite "(?i)/app-gateway$" / break;
+spec:
+  rules:
+    - host: "fieldsw15756.cs.domino.tech"
+      http:
+        paths:
+        - path: /app-gateway/?(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: app-gateway
+              port:
+                number: 5000
